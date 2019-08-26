@@ -1,8 +1,8 @@
-div.ll_dataLengthValidateA.length-hint { display: none; position: absolute; margin-top: 0px; padding: 5px; z-index: 999; width: 150px; background-color: #e5fff3; }
-div.ll_dataLengthValidateA.length-hint.position-left-top { top: -2em; border-top-right-radius: 10px; border-top-left-radius: 10px; }
-div.ll_dataLengthValidateA.length-hint.position-right-top { top: -2em; right: 0px; border-top-right-radius: 10px; border-top-left-radius: 10px; }
-div.ll_dataLengthValidateA.length-hint.position-left-bottom { border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
-div.ll_dataLengthValidateA.length-hint.position-right-bottom { right: 0px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
-div.ll_dataLengthValidateA.length-hint p.length-value { font-size: 14px; text-align: center; color: #656565; }
+div.ll_dataLengthValidate.length-hint { display: none; position: absolute; margin-top: 0px; padding: 5px; z-index: 999; width: 150px; background-color: #e5fff3; }
+div.ll_dataLengthValidate.length-hint.position-left-top { top: -2em; border-top-right-radius: 10px; border-top-left-radius: 10px; }
+div.ll_dataLengthValidate.length-hint.position-right-top { top: -2em; right: 0px; border-top-right-radius: 10px; border-top-left-radius: 10px; }
+div.ll_dataLengthValidate.length-hint.position-left-bottom { border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+div.ll_dataLengthValidate.length-hint.position-right-bottom { right: 0px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; }
+div.ll_dataLengthValidate.length-hint p.length-value { font-size: 14px; text-align: center; color: #656565; }
 
 /*# sourceMappingURL=jquery.ll_dataLengthValidate.css.map */
