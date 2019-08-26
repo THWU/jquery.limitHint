@@ -1,5 +1,5 @@
 /**
- * ll_dataLengthValidate v1.0,
+ * ll_datalengthvalidate v1.0,
  * ===================================
  * L&L EIP system plugin: data length validate tool
  *
@@ -8,7 +8,7 @@
  */
 
 (function ($) {
-  $.fn.ll_dataLengthValidate = function (options) {
+  $.fn.LL_DataLengthValidate = function (options) {
     // This is the easiest way to have default options.
     var settings = $.extend({
       // These are the defaults.
@@ -22,9 +22,9 @@
     } else {
       var $lengthHit = $('<div>').addClass('length-hint ll_dataLengthValidate').append($('<p>').addClass('length-value'));
     }
-    $.fn.ll_dataLengthValidate_init(settings, $lengthHit, this);
+    $.fn.LL_DataLengthValidate_Init(settings, $lengthHit, this);
   };
-  $.fn.ll_dataLengthValidate_init = function (settings, $lengthHit, $target) {
+  $.fn.LL_DataLengthValidate_Init = function (settings, $lengthHit, $target) {
     return $target.each(function () {
       var $that = $(this);
       var isBytesLen = $that.attr(settings.maxlen_bytes_tag) ? true : false;
