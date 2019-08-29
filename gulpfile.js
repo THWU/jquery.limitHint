@@ -1,12 +1,13 @@
 const gulp = require('gulp');
 const newer = require('gulp-newer');
 const babel = require('gulp-babel');
-const compass = require('gulp-compass');
+const sass = require('gulp-sass')
 const eslint = require('gulp-eslint');
 const replace = require('gulp-replace');
 const minifyCSS = require('gulp-minify-css');
 const uglify = require('gulp-uglify-es').default;
 const rename = require("gulp-rename");
+const sourcemaps = require('gulp-sourcemaps');
 
 function handleError(err) {
     console.log(err.toString());
@@ -43,21 +44,20 @@ gulp.task('uglify', ['eslint_with_babel'], function() {
         .pipe(gulp.dest(jsDest));
 });
 
-gulp.task('compass', function () {
+gulp.task('sass', function () {
     return gulp.src(cssSrc) //來源路徑
         .on('error', handleError)
-        .pipe(compass({ //這段內輸入config.rb的內容
-            css: cssDest, //compass輸出位置
-            sass: cssSrcFolder, //sass來源路徑
-            sourcemap: true, //compass 1.0 sourcemap
-            style: 'compact', //CSS壓縮格式，預設(nested)
-            comments: true //是否要註解，預設(true)
-            //require: ['susy'] //額外套件 susy
-        }))
+        .pipe(sourcemaps.init())
+        .pipe(
+            sass({outputStyle: 'compact'}) //CSS壓縮格式，預設(nested)
+            .on('error', sass.logError)
+        )
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(cssDest))
     // .pipe(gulp.dest('app/assets/temp')); //輸出位置(非必要)
 });
 
-gulp.task('minify-css', ['compass'], function () {
+gulp.task('minify-css', ['sass'], function () {
     return gulp.src([cssDest + '/*.css', '!' + cssDest + '/*.min.css'])
         .on('error', handleError)
         .pipe(minifyCSS({

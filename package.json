@@ -1,5 +1,5 @@
 {
-  "name": "ll-datalengthvalidate",
+  "name": "limit-hint",
   "version": "0.1.0",
   "scripts": {
     "start": "concurrently \"gulp default\" "
@@ -15,12 +15,13 @@
     "concurrently": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
-    "gulp-compass": "^2.1.0",
     "gulp-eslint": "^4.0.0",
     "gulp-minify-css": "^1.2.4",
     "gulp-newer": "^1.4.0",
     "gulp-rename": "^1.4.0",
     "gulp-replace": "^1.0.0",
-    "gulp-uglify-es": "^1.0.4"
+    "gulp-uglify-es": "^1.0.4",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5"
   }
 }
