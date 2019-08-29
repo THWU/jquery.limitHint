@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * ll_datalengthvalidate v1.0,
  * ===================================
@@ -31,11 +33,11 @@
       $that.on('focus', function () {
         if (!$that.attr('readonly')) {
           var remainLength = parseInt(isBytesLen ? $that.attr(settings.maxlen_bytes_tag) : $that.attr(settings.maxlen_tag)) - (isBytesLen ? bytesLength($that.val()) : $that.val().length);
-          $lengthHit.find('p.length-value').text(`剩餘 ${remainLength} 個字`);
+          $lengthHit.find('p.length-value').text('\u5269\u9918 ' + remainLength + ' \u500B\u5B57');
           remainLength < 0 ? $that.attr('invalid', 'true') : $that.attr('invalid', 'false');
           $that.parent().css({ 'position': 'relative' });
           $lengthHit.removeClass('position-left-top position-left-bottom position-right-top position-right-bottom');
-          $lengthHit.addClass(`position-${$that.attr(settings.tip_position_tag)}`);
+          $lengthHit.addClass('position-' + $that.attr(settings.tip_position_tag));
           if ($that.attr(settings.tip_position_tag).indexOf('top') > 0) {
             $that.before($lengthHit);
           } else {
@@ -52,7 +54,7 @@
       $that.on('keyup', function () {
         if (!$that.attr('readonly')) {
           var remainLength = parseInt(isBytesLen ? $that.attr(settings.maxlen_bytes_tag) : $that.attr(settings.maxlen_tag)) - (isBytesLen ? bytesLength($that.val()) : $that.val().length);
-          $lengthHit.find('p.length-value').text(`剩餘 ${remainLength} 個字`);
+          $lengthHit.find('p.length-value').text('\u5269\u9918 ' + remainLength + ' \u500B\u5B57');
           remainLength < 0 ? $that.attr('invalid', 'true') : $that.attr('invalid', 'false');
         }
       });
