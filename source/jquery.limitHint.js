@@ -1,39 +1,67 @@
 /**
- * ll_datalengthvalidate v1.0,
+ * Limit Hint v0.1
  * ===================================
- * L&L EIP system plugin: data length validate tool
+ * data validate hint
  *
  * (c) 2019 Tehsien Wu
  * None Licensed
  */
 
-(function ($) {
-  $.fn.LL_DataLengthValidate = function(options) {
+(function($) {
+  $.fn.LimitHint = function (options) {
     // This is the easiest way to have default options.
-    var settings = $.extend({
-        // These are the defaults.
-        trigger_tag: 'data-len-validate',
-        maxlen_tag: 'data-maxlen',
-        maxlen_bytes_tag: 'data-maxlen-bytes',
-        tip_position_tag: 'data-tip-position',
-    }, options );
-    if ($lengthHit) { $lengthHit.find('p').text(''); }
-    else { var $lengthHit = $('<div>').addClass('length-hint ll_dataLengthValidate').append($('<p>').addClass('length-value')); }
-    $.fn.LL_DataLengthValidate_Init(settings, $lengthHit, this);
+    var settings = $.extend({}, $.fn.LimitHint.defaults , options);
+    Init(settings, this);
   };
-  $.fn.LL_DataLengthValidate_Init = function(settings, $lengthHit, $target) {
-    return $target.each(function() {
-      var $that = $(this);
-      var isBytesLen = $that.attr(settings.maxlen_bytes_tag) ? true : false;
-      $that.on('focus', function() {
+  $.fn.LimitHint.defaults = {
+    // These are the defaults.
+    'tags': {
+      'auto_discover': 'data-limit-hint',
+      'limit_type': 'data-limit-hint-type',
+      'limit_content': 'data-limit-hint-content',
+      'position': 'data-limit-hint-position',
+    },
+    'text-valid': '還剩餘 {0} 個字',
+  };
+  $.fn.LimitHint.limit_type = {
+    'maxlen': {
+      'Description': '最大字數限制：中、英文字皆判斷1個單位',
+    },
+    'maxlen-bytes': {
+      'Description': '最大字數限制：繁/簡中字為2個單位，其他則為1個單位',
+    }
+  }
+
+  function Init(settings, $target) {
+    var $lengthHit = $('<div>').addClass('LimitHint').append($('<p>').addClass('length-value'));
+    return $target.each((index, element) => {
+      var $that = $(element);
+
+      const _limitType = $that.attr(settings.tags.limit_type);
+      const _limit_content = $that.attr(settings.tags.limit_content);
+      const _position = $that.attr(settings.tags.position);
+      const _text_valid_template = settings['text-valid'];
+
+      $that.on('focus', () => {
+        //  set required tag
+        $lengthHit.removeAttr('required');
+        if ($that.attr('required')) {
+          $lengthHit.attr('required', 'required');
+        }
         if (!$that.attr('readonly')) {
-          var remainLength = parseInt(isBytesLen ? $that.attr(settings.maxlen_bytes_tag) : $that.attr(settings.maxlen_tag)) - (isBytesLen ? bytesLength($that.val()) : $that.val().length);
-          $lengthHit.find('p.length-value').text(`剩餘 ${remainLength} 個字`);
-          remainLength < 0 ? $that.attr('invalid', 'true') : $that.attr('invalid', 'false');
+          var result = GetResult(_limitType, _limit_content, _text_valid_template,  $that.val());
+          $lengthHit.find('p.length-value').text(result.text);
+          //  set invalid tag
+          [$that, $lengthHit].forEach((item, index, array) => {
+            item.attr('invalid', result.isValid ? 'false' : 'true');
+          });
+          //  set position
           $that.parent().css({'position':'relative'});
-          $lengthHit.removeClass('position-left-top position-left-bottom position-right-top position-right-bottom');
-          $lengthHit.addClass(`position-${$that.attr(settings.tip_position_tag)}`);
-          if ($that.attr(settings.tip_position_tag).indexOf('top') > 0) {
+          $lengthHit.removeClass(function (index, className) {
+            return (className.match (/(^|\s)position-\S+/g) || []).join(' ');
+          });
+          $lengthHit.addClass(`position-${$that.attr(settings.tags.position)}`);
+          if ($that.attr(settings.tags.position).indexOf('top') > 0) {
             $that.before($lengthHit);
           }else {
             $that.after($lengthHit);
@@ -41,18 +69,53 @@
           $lengthHit.show();
         }
       });
-      $that.on('focusout', function() {
+      $that.on('focusout', () => {
         if (!$that.attr('readonly')) {
           $lengthHit.hide();
         }
       });
-      $that.on('keyup', function() {
+      $that.on('keyup', () => {
         if (!$that.attr('readonly')) {
-          var remainLength = parseInt(isBytesLen ? $that.attr(settings.maxlen_bytes_tag) : $that.attr(settings.maxlen_tag)) - (isBytesLen ? bytesLength($that.val()) : $that.val().length);
-          $lengthHit.find('p.length-value').text(`剩餘 ${remainLength} 個字`);
-          remainLength < 0 ? $that.attr('invalid', 'true') : $that.attr('invalid', 'false');
+          var result = GetResult(_limitType, _limit_content, _text_valid_template,  $that.val());
+          $lengthHit.find('p.length-value').text(result.text);
+          [$that, $lengthHit].forEach((item, index, array) => {
+            item.attr('invalid', result.isValid ? 'false' : 'true');
+          });
         }
       });
     });
+  }
+  function GetResult(limitType, limitContent, textTemplate, input = '') {
+    var textReturn = '';
+    var isValid = false;
+    switch (limitType) {
+      case 'maxlen':
+        var remainLength = CalcRemainLength(false, limitContent, input);
+        isValid = remainLength >= 0 ? true: false;
+        textReturn = textTemplate.replace('{0}', remainLength);
+        break;
+      case 'maxlen-bytes':
+        var remainLength = CalcRemainLength(true, limitContent, input);
+        isValid = remainLength >= 0 ? true: false;
+        textReturn = textTemplate.replace('{0}', remainLength);
+        break;
+      default:
+        break;
+    }
+    return {
+      'text': textReturn,
+      'isValid': isValid,
+    };
+  }
+  function CalcRemainLength(isBytesLen = false, len_limit, input = '') {
+    return len_limit - (isBytesLen ? GetBytesLength(input) : input.length);
+  }
+  function GetBytesLength(text) {
+    var regex = /[^\u4e00-\u9fa5]/; //  非中文的 unicode 編號範圍 
+    var length = 0;
+    [...text].forEach((value, index, array) => {
+      length += regex.test(value) ? 1 : 2;
+    });
+    return length;
   }
 })(jQuery)
