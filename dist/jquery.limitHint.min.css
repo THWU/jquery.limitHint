@@ -1,10 +1,10 @@
 [data-limit-hint=true][required]:not([readonly]):not([disabled]){border:1.5px solid #74b6F1}
 [data-limit-hint=true][invalid=true]{border:1.5px solid #D9534F!important}
-div.LimitHint.position-left-top,div.LimitHint.position-right-top,div.LimitHint.position-top-left,div.LimitHint.position-top-right{top:-2em;border-top-right-radius:10px;border-top-left-radius:10px}
-div.LimitHint{display:none;position:absolute;margin-top:0;z-index:999;width:auto;background-color:#e5fff3;color:#656565;padding:5px 20px}
+div.LimitHint.position-left-top,div.LimitHint.position-right-top,div.LimitHint.position-top-left,div.LimitHint.position-top-right{top:-22px;border-top-right-radius:10px;border-top-left-radius:10px}
+div.LimitHint{display:none;position:absolute;margin-top:0;z-index:999;width:auto;font-size:12px!important;line-height:12px!important;background-color:#e5fff3;color:#656565;padding:5px 20px}
 div.LimitHint[required=required]{background-color:#74b6F1;color:#FFF}
 div.LimitHint[invalid=true]{background-color:#D9534F;color:#FFF}
 div.LimitHint.position-right-top,div.LimitHint.position-top-right{right:0}
 div.LimitHint.position-bottom-left,div.LimitHint.position-left-bottom{border-bottom-right-radius:10px;border-bottom-left-radius:10px}
 div.LimitHint.position-bottom-right,div.LimitHint.position-right-bottom{right:0;border-bottom-right-radius:10px;border-bottom-left-radius:10px}
-div.LimitHint p.length-value{font-size:14px;text-align:center;color:inherit}
+div.LimitHint p.length-value{text-align:center;color:inherit;margin:0;padding:0;border:0;font:inherit;font-size:100%;vertical-align:baseline}

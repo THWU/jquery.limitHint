@@ -47,6 +47,8 @@ div.LimitHint {
   padding-left: 20px;
   z-index: 999;
   width: auto;
+  font-size: 12px !important;
+  line-height: 12px !important;
 
   @include highlight(false, false);
   &[required=required] {
@@ -57,13 +59,13 @@ div.LimitHint {
   }
 
   &.position-left-top, &.position-top-left {
-    top: -2em;
+    top: -22px;
     border-top-right-radius: $radius-length;
     border-top-left-radius: $radius-length;
   }
 
   &.position-right-top, &.position-top-right {
-    top: -2em;
+    top: -22px;
     right: 0px;
     border-top-right-radius: $radius-length;
     border-top-left-radius: $radius-length;
@@ -84,6 +86,13 @@ div.LimitHint {
     font-size: 14px;
     text-align: center;
     color: inherit;
+
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
   }
 }
 
