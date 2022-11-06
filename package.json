@@ -13,7 +13,7 @@
     "babel-eslint": "^8.0.2",
     "babel-preset-env": "^1.6.1",
     "concurrently": "^2.0.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-babel": "^7.0.0",
     "gulp-eslint": "^4.0.0",
     "gulp-minify-css": "^1.2.4",
